@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>远程协助诊断引导说明 - 专业电脑故障远程技术支持服务</title>
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
+        body { font-family: 'Inter', system-ui, -apple-system, sans-serif; }
+        .step-number {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 32px;
+            height: 32px;
+            background-color: #3b82f6;
+            color: white;
+            border-radius: 50%;
+            font-weight: bold;
+            margin-right: 12px;
+        }
+        
+        /* 流程引导图基础样式 */
+        .flow-step {
+            position: relative;
+            flex: 1;
+            text-align: center;
+        }
+
+        /* 桌面端连接箭头 (→) */
+        @media (min-width: 641px) {
+            .flow-step:not(:last-child)::after {
+                content: '→';
+                position: absolute;
+                right: -10%;
+                top: 20%;
+                color: #cbd5e1;
+                font-weight: bold;
+                font-size: 1.2rem;
+            }
+        }
+
+        /* 移动端连接箭头 (↓) */
+        @media (max-width: 640px) {
+            .flow-container {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                gap: 1.5rem;
+            }
+            .flow-step {
+                width: 100%;
+                margin-bottom: 0.5rem;
+            }
+            .flow-step:not(:last-child)::after {
+                content: '↓';
+                display: block;
+                margin-top: 0.5rem;
+                color: #cbd5e1;
+                font-weight: bold;
+                font-size: 1.2rem;
+            }
+        }
+
+        .modal-overlay {
+            transition: opacity 0.3s ease;
+        }
+        .modal-content {
+            transition: transform 0.3s ease;
+        }
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 6px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 10px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 10px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+        .policy-text h4 {
+            font-weight: bold;
+            color: #1e293b;
+            margin-top: 1.5rem;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .policy-text p {
+            margin-bottom: 0.75rem;
+            color: #475569;
+            line-height: 1.6;
+            font-size: 0.875rem;
+        }
+        .visitor-info-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            padding: 2px 8px;
+            background: rgba(255,255,255,0.8);
+            border-radius: 6px;
+            font-size: 11px;
+            color: #64748b;
+            border: 1px solid #e2e8f0;
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-900 min-h-screen pb-10">
+
+    <div class="h-1.5 bg-blue-600"></div>
+
+    <main class="max-w-3xl mx-auto px-4 py-8">
+        
+        <!-- 访客实时动态栏 -->
+        <div class="mb-6 grid grid-cols-2 sm:flex sm:flex-wrap items-center justify-center gap-2">
+            <div class="visitor-info-tag">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                </svg>
+                <span id="v-location">正在定位...</span>
+            </div>
+            <div class="visitor-info-tag">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+                <span id="v-time">--:--:--</span>
+            </div>
+            <div class="visitor-info-tag">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                </svg>
+                <span id="v-device">检测中...</span>
+            </div>
+            <div class="visitor-info-tag">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
+                </svg>
+                <span id="v-os">系统加载中</span>
+            </div>
+        </div>
+
+        <header class="text-center mb-10">
+            <div class="inline-flex items-center justify-center p-1 bg-white rounded-2xl mb-4 shadow-md border border-slate-100">
+                <img src="https://img.lansoo.com/file/1770018994147_Microsoft_logo.png" alt="Service Logo" class="h-14 w-14 rounded-xl object-contain">
+            </div>
+            <h1 class="text-2xl font-bold text-slate-900 mb-2">专业远程诊断与故障处理引导</h1>
+            <p class="text-slate-600">提供免费专业远程诊断，快速修复您的电脑故障</p>
+        </header>
+
+        <!-- 服务流程引导图 -->
+        <section class="bg-white p-6 rounded-2xl shadow-sm border border-slate-100 mb-8">
+            <h2 class="text-center text-sm font-bold text-slate-400 uppercase tracking-widest mb-6 text-[10px] sm:text-xs">远程技术服务流程说明</h2>
+            <div class="flow-container flex flex-col sm:flex-row justify-between items-center sm:items-start gap-4 sm:gap-2">
+                <div class="flow-step">
+                    <div class="w-10 h-10 bg-blue-50 text-blue-600 rounded-full flex items-center justify-center mx-auto mb-2 font-bold border border-blue-100">1</div>
+                    <p class="text-[10px] font-bold">与工程师预约</p>
+                </div>
+                <div class="flow-step">
+                    <div class="w-10 h-10 bg-blue-50 text-blue-600 rounded-full flex items-center justify-center mx-auto mb-2 font-bold border border-blue-100">2</div>
+                    <p class="text-[10px] font-bold">沟通具体问题</p>
+                </div>
+                <div class="flow-step">
+                    <div class="w-10 h-10 bg-blue-50 text-blue-600 rounded-full flex items-center justify-center mx-auto mb-2 font-bold border border-blue-100">3</div>
+                    <p class="text-[10px] font-bold">反馈处理方案</p>
+                </div>
+                <div class="flow-step">
+                    <div class="w-10 h-10 bg-blue-50 text-blue-600 rounded-full flex items-center justify-center mx-auto mb-2 font-bold border border-blue-100">4</div>
+                    <p class="text-[10px] font-bold">远程专业修复</p>
+                </div>
+                <div class="flow-step">
+                    <div class="w-10 h-10 bg-orange-100 text-orange-600 rounded-full flex items-center justify-center mx-auto mb-2 font-bold border border-orange-200">5</div>
+                    <p class="text-[10px] font-bold text-orange-600">完成满意评价</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 服务说明卡片 -->
+        <section class="bg-blue-600 p-6 rounded-2xl shadow-lg text-white mb-8">
+            <h3 class="text-lg font-bold mb-4 flex items-center gap-2">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                    <path fill-rule="evenodd" d="M2.166 4.999A11.954 11.954 0 0010 1.944 11.954 11.954 0 0017.834 5c.11.65.166 1.32.166 2.001 0 5.225-3.34 9.67-8 11.317C5.34 16.67 2 12.225 2 7c0-.682.057-1.35.166-2.001zm11.541 3.708a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+                </svg>
+                20年系统运维工程师 1对1在线服务
+            </h3>
+            <ul class="grid grid-cols-1 sm:grid-cols-2 gap-y-3 gap-x-6 text-sm text-blue-50">
+                <li>✔ 深度清理流氓软件/木马病毒</li>
+                <li>✔ 引导故障/蓝屏/系统卡顿修复</li>
+                <li>✔ 开机密码/PIN码忘记重置指导</li>
+                <li>✔ Wifi/蓝牙等硬件驱动故障处理</li>
+                <li>✔ 系统无损升级专业/工作站版</li>
+                <li>✔ ACE反作弊弹窗/游戏环境修复</li>
+                <li>✔ 官方纯净系统安装与极致优化</li>
+                <li>✔ 病毒查杀、监听排查 隐私安全保护</li>
+            </ul>
+        </section>
+
+        <div class="space-y-6">
+            <!-- 步骤 1 -->
+            <section class="bg-white p-6 rounded-2xl shadow-sm border border-slate-100">
+                <div class="flex items-center mb-4">
+                    <span class="step-number">1</span>
+                    <h2 class="text-lg font-semibold">添加工程师微信 | 可选远程视频指导</h2>
+                </div>
+                <div class="ml-11">
+                    <div class="p-4 bg-slate-50 rounded-xl flex items-center justify-between border border-dashed border-slate-200">
+                        <div class="flex items-center gap-3">
+                            <div class="w-12 h-12 rounded-lg overflow-hidden border border-slate-200 shadow-sm flex-shrink-0 bg-white p-1">
+                                <img src="https://img.lansoo.com/file/1770018994147_Microsoft_logo.png" alt="微信头像" class="w-full h-full object-contain">
+                            </div>
+                            <div>
+                                <p class="text-xs text-slate-500 uppercase font-semibold">技术工程师</p>
+                                <p class="text-lg font-mono font-bold text-blue-600">qq2269404909</p>
+                            </div>
+                        </div>
+                        <button onclick="copyText('qq2269404909')" class="px-4 py-2 bg-blue-600 text-white text-xs font-bold rounded-lg hover:bg-blue-700 transition-colors shadow-sm">
+                            复制微信
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 步骤 2 -->
+            <section class="bg-white p-6 rounded-2xl shadow-sm border border-slate-100">
+                <div class="flex items-center mb-4">
+                    <span class="step-number">2</span>
+                    <h2 class="text-lg font-semibold">下载并安装远程工具</h2>
+                </div>
+                <div class="ml-11 space-y-6">
+                    <div>
+                        <h4 class="text-xs font-bold text-slate-400 mb-3 uppercase tracking-tighter italic">大陆国内用户专用</h4>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                            <a href="https://sunlogin.oray.com/download/" target="_blank" class="flex items-center justify-center p-3 bg-orange-500 text-white rounded-xl text-sm font-bold hover:bg-orange-600 transition-all">向日葵 (推荐)</a>
+                            <a href="https://www.asklink.com/" target="_blank" class="flex items-center justify-center p-3 bg-blue-500 text-white rounded-xl text-sm font-bold hover:bg-blue-600 transition-all">连连控</a>
+                        </div>
+                    </div>
+                    <div>
+                        <h4 class="text-xs font-bold text-slate-400 mb-3 uppercase tracking-tighter italic">海外国际用户专用</h4>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                            <a href="https://uuyc.163.com/" target="_blank" class="flex items-center justify-center p-3 bg-slate-800 text-white rounded-xl text-sm font-bold hover:bg-slate-900 transition-all">网易 UU 远程</a>
+                            <a href="https://rustdesk.com/" target="_blank" class="flex items-center justify-center p-3 bg-indigo-600 text-white rounded-xl text-sm font-bold hover:bg-indigo-700 transition-all">RustDesk</a>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 步骤 3 -->
+            <section class="bg-white p-6 rounded-2xl shadow-sm border border-slate-100">
+                <div class="flex items-center mb-4">
+                    <span class="step-number">3</span>
+                    <h2 class="text-lg font-semibold">获取识别码指引</h2>
+                </div>
+                <div class="ml-11">
+                    <p class="text-slate-600 mb-6 text-sm">安装后请点击按钮查看如何找到识别码，并告知工程师：</p>
+                    
+                    <div class="flex flex-wrap gap-2">
+                        <button onclick="showGuide('向日葵', 'https://img.lansoo.com/file/1769944166103_xiangrikui.jpg')" class="px-4 py-2 border border-orange-200 bg-orange-50 text-orange-700 rounded-lg text-xs font-bold hover:bg-orange-100 transition-colors">
+                            向日葵说明
+                        </button>
+                        <button onclick="showGuide('连连控', 'https://img.lansoo.com/file/1769944253971_lianliankong.jpg')" class="px-4 py-2 border border-blue-200 bg-blue-50 text-blue-700 rounded-lg text-xs font-bold hover:bg-blue-100 transition-colors">
+                            连连控说明
+                        </button>
+                        <button onclick="showGuide('网易UU', 'https://img.lansoo.com/file/1769944259683_UU.png')" class="px-4 py-2 border border-slate-200 bg-slate-50 text-slate-700 rounded-lg text-xs font-bold hover:bg-slate-100 transition-colors">
+                            网易UU说明
+                        </button>
+                    </div>
+
+                    <div class="mt-6 p-4 bg-blue-50 rounded-xl">
+                        <p class="text-xs text-blue-700 leading-relaxed">
+                            <strong>操作提示：</strong> 软件下载安装运行后，请将显示的 <span class="font-bold underline">“设备识别码\ID”</span> 与 <span class="font-bold underline">“密码\验证码”</span> 拍照、截图告知工程师。
+                        </p>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+<footer class="mt-12 text-center space-y-4">
+    <div class="inline-flex flex-col items-center gap-3">
+        <a href="https://xhslink.com/m/uyEgHU0CSE" target="_blank" class="inline-flex items-center gap-2 px-6 py-2.5 bg-gradient-to-r from-red-500 to-red-600 text-white rounded-full text-xs font-bold shadow-lg hover:shadow-red-200 hover:scale-105 transition-all">
+            <svg viewBox="0 0 24 24" class="h-4 w-4 fill-current" xmlns="http://www.w3.org/2000/svg">
+                <path d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2zm4.445 13.917c-.15.35-.45.617-.833.7-.383.083-.8-.017-1.117-.267-.533-.417-.9-.917-1.067-1.467-.366.45-.85.767-1.4.917-.55.15-1.116.117-1.633-.1-.517-.217-.933-.617-1.183-1.117-.25-.5-.317-1.067-.184-1.6.134-.533.45-.983.884-1.283.433-.3.95-.45 1.483-.417.4.017.783.133 1.117.333V9.25c0-.417.333-.75.75-.75s.75.333.75.75v3.417c.05.317.217.6.483.783.267.183.6.217.9.1.3-.117.517-.383.583-.7.067-.317-.017-.65-.233-.883-.167-.183-.367-.317-.584-.383V9.5c.384.117.717.35.95.667.233.317.35.7.35 1.083 0 .75-.417 1.433-1.066 1.783.35.317.6.734.717 1.2.117.467.067.95-.15 1.384zm-3.112-2.3c0 .283-.117.55-.316.75s-.467.317-.75.317c-.284 0-.55-.117-.75-.317s-.317-.467-.317-.75.117-.55.317-.75.466-.317.75-.317c.283 0 .55.117.75.317s.316.467.316.75z"/>
+            </svg>
+            访问小红书主页: [远程技术支持]
+        </a>
+        <p class="text-[10px] text-slate-400">小红书搜索 ID：<span class="font-mono">远程技术支持</span></p>
+    </div>
+
+    <div class="block">
+        <button onclick="showServicePolicy()" class="text-slate-400 text-[10px] underline hover:text-blue-500 transition-colors">查看《远程协助服务安全声明》</button>
+    </div>
+</footer>
+    </main>
+
+    <!-- 弹窗 (Modal) -->
+    <div id="modalOverlay" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 sm:p-6 opacity-0 pointer-events-none modal-overlay">
+        <div class="bg-white rounded-2xl w-full max-w-xl max-h-[90vh] flex flex-col overflow-hidden shadow-2xl modal-content scale-95">
+            <div class="flex items-center justify-between p-4 border-b flex-shrink-0">
+                <h3 id="modalTitle" class="font-bold text-slate-800">软件安装说明</h3>
+                <button onclick="hideGuide()" class="p-2 hover:bg-slate-100 rounded-full transition-colors">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                </button>
+            </div>
+            <div class="flex-grow overflow-y-auto p-2 custom-scrollbar bg-slate-50">
+                <img id="modalImage" src="" alt="指引图片" class="w-full h-auto block rounded-lg shadow-inner">
+                <div class="h-4"></div>
+            </div>
+            <div class="p-3 bg-white border-t text-center text-[10px] text-slate-400 flex-shrink-0">
+                温馨提示：您可以上下滑动图片查看完整步骤
+            </div>
+        </div>
+    </div>
+
+    <!-- 服务协议声明弹窗 -->
+    <div id="policyOverlay" class="fixed inset-0 bg-slate-900/80 backdrop-blur-md z-[100] flex items-center justify-center p-4 sm:p-6 opacity-0 pointer-events-none modal-overlay">
+        <div class="bg-white rounded-3xl w-full max-w-lg max-h-[85vh] flex flex-col overflow-hidden shadow-2xl modal-content scale-95">
+            <div class="p-6 border-b text-center flex-shrink-0">
+                <div class="w-12 h-12 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center mx-auto mb-3">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04a11.955 11.955 0 00-3.042 8.618c0 5.423 3.591 10.007 8.542 11.604.497.16 1.012.24 1.518.24s1.02-.08 1.518-.24c4.95-1.597 8.542-6.181 8.542-11.604a11.955 11.955 0 00-3.042-8.618z" />
+                    </svg>
+                </div>
+                <h3 class="text-xl font-bold text-slate-900">远程协助服务声明</h3>
+                <p class="text-xs text-slate-500 mt-1">为了您的隐私安全与服务体验，请仔细阅读</p>
+            </div>
+            
+            <div class="flex-grow overflow-y-auto p-6 custom-scrollbar policy-text bg-slate-50/50">
+                <p class="italic text-slate-500">感谢您选择我的远程协助服务。服务开始前，请您知悉以下内容：</p>
+                <h4>1. 远程服务前准备</h4>
+                <p>• 请确保设备连接稳定的网络环境。<br>• 请详尽描述需要处理的问题，比如电脑设备品牌型号、系统规格、故障发生前后进行过哪些操作及哪些软件或数据需要保留。<br>• 远程协助处理前需要您根据指引准备好设备ID识别码跟授权码，以便建立安全连接。</p>
+                <h4>2. 远程服务流程</h4>
+                <p>• 我们将使用向日葵、连连控或UU远程等主流专业软件操作。<br>• 过程中可选与我保持沟通（文本窗、微信实时交流）。<br>• 我会在您的视线范围内进行操作，确保您可以实时掌控每一步流程。<br>• 可能会传输并安装系统优化必要的专业工具程序。<br>• 部分情况需要您积极配合操作，您的配合程度将直接影响解决问题的速度。</p>
+                <h4>3. 隐私保护承诺</h4>
+                <p>• 严格遵守隐私保护政策，绝不访问或操作与服务无关的文件和数据。<br>• 服务结束后立即断开连接。您可以选择卸载远程软件，并清除所有临时文件。</p>
+                <h4>4. 安全须知</h4>
+                <p>• <strong>切勿</strong>在服务过程中泄露银行账户、支付密码等敏感信息。<br>• 远程无法得知隐藏<strong>硬件</strong>，若检测出硬件问题，我会给出维修建议。<br>• 如遇停电、断网等意外导致操作失败，敬请谅解。<br>• 对任何操作有疑问，请随时提出或终止远程服务。</p>
+                <h4>5. 服务确认</h4>
+                <p>在开始前我们会再次确认服务范围。服务结束后如有反馈，请及时联系以便改进。</p>
+                <div class="mt-8 p-4 bg-orange-50 border border-orange-100 rounded-xl text-orange-800 text-xs font-bold text-center">
+                    请您确认以上信息，开始远程服务即表示您同意以上全部条款。
+                </div>
+            </div>
+            
+            <div class="p-6 border-t bg-white flex-shrink-0">
+                <button onclick="acceptPolicy()" class="w-full py-3.5 bg-blue-600 text-white rounded-2xl font-bold shadow-lg shadow-blue-200 hover:bg-blue-700 active:scale-[0.98] transition-all">
+                    我已阅读并同意，开始服务！
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast 提示 -->
+    <div id="toast" class="fixed bottom-8 left-1/2 -translate-x-1/2 px-6 py-3 bg-slate-900 text-white text-sm font-medium rounded-full shadow-2xl opacity-0 transition-opacity duration-300 pointer-events-none z-[60]">
+        微信号已复制
+    </div>
+
+    <script>
+        // 1. 实时访客信息逻辑
+        async function initVisitorInfo() {
+    // 1. 更新日期与时间
+    setInterval(() => {
+        const now = new Date();
+        // 格式化为：2026/2/2 01:26:00
+        document.getElementById('v-time').innerText = now.toLocaleString('zh-CN', {
+            year: 'numeric',
+            month: 'numeric',
+            day: 'numeric',
+            hour: '2-digit',
+            minute: '2-digit',
+            second: '2-digit',
+            hour12: false
+        });
+    }, 1000);
+
+    // 2. 设备检测
+    const ua = navigator.userAgent;
+    const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(ua);
+    document.getElementById('v-device').innerText = isMobile ? '移动手机端' : 'PC电脑端';
+
+    // 3. 系统检测
+    let os = "未知系统";
+    if (ua.indexOf("Win") != -1) os = "Windows";
+    else if (ua.indexOf("Mac") != -1) os = "MacOS";
+    else if (ua.indexOf("Linux") != -1) os = "Linux";
+    else if (ua.indexOf("Android") != -1) os = "Android";
+    else if (ua.indexOf("like Mac") != -1) os = "iOS";
+    document.getElementById('v-os').innerText = os;
+
+    // 3. 增强版位置检测
+    const locationEl = document.getElementById('v-location');
+    
+    // 尝试多个备用 API
+    const apiSources = [
+        'https://ipapi.co/json/',
+        'https://ipwho.is/',
+        'https://freeipapi.com/api/json'
+    ];
+
+    for (let source of apiSources) {
+        try {
+            const response = await fetch(source, { timeout: 3000 });
+            if (!response.ok) continue;
+            const res = await response.json();
+            
+            // 兼容不同 API 的字段名
+            const country = res.country_name || res.country || '中国';
+            const city = res.city || res.cityName || '';
+            
+            if (city || country) {
+                locationEl.innerText = `${country} · ${city}`;
+                return; // 成功获取则停止循环
+            }
+        } catch (e) {
+            console.warn(`源 ${source} 无法访问，尝试下一个...`);
+        }
+    }
+    
+    locationEl.innerText = '接入互联网';
+}
+
+
+        // 复制功能
+        function copyText(text) {
+            const el = document.createElement('textarea');
+            el.value = text;
+            document.body.appendChild(el);
+            el.select();
+            document.execCommand('copy');
+            document.body.removeChild(el);
+            const toast = document.getElementById('toast');
+            toast.innerText = "微信号已复制";
+            toast.classList.add('opacity-100');
+            setTimeout(() => toast.classList.remove('opacity-100'), 2000);
+        }
+
+        const modal = document.getElementById('modalOverlay');
+        const modalContent = modal.querySelector('.modal-content');
+        const modalTitle = document.getElementById('modalTitle');
+        const modalImage = document.getElementById('modalImage');
+        const scrollArea = modal.querySelector('.overflow-y-auto');
+
+        const policyOverlay = document.getElementById('policyOverlay');
+        const policyContent = policyOverlay.querySelector('.modal-content');
+
+        window.onload = function() {
+            showServicePolicy();
+            initVisitorInfo();
+        };
+
+        function showServicePolicy() {
+            policyOverlay.classList.remove('pointer-events-none', 'opacity-0');
+            policyOverlay.classList.add('opacity-100');
+            policyContent.classList.remove('scale-95');
+            policyContent.classList.add('scale-100');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function acceptPolicy() {
+            policyOverlay.classList.add('opacity-0', 'pointer-events-none');
+            policyOverlay.classList.remove('opacity-100');
+            policyContent.classList.remove('scale-100');
+            policyContent.classList.add('scale-95');
+            document.body.style.overflow = '';
+            
+            const toast = document.getElementById('toast');
+            toast.innerText = "已同意服务声明";
+            toast.classList.add('opacity-100');
+            setTimeout(() => toast.classList.remove('opacity-100'), 2000);
+        }
+
+        function showGuide(title, imageUrl) {
+            modalTitle.innerText = title + ' - 识别码获取指引';
+            modalImage.src = imageUrl;
+            scrollArea.scrollTop = 0;
+            
+            modal.classList.remove('pointer-events-none', 'opacity-0');
+            modal.classList.add('opacity-100');
+            modalContent.classList.remove('scale-95');
+            modalContent.classList.add('scale-100');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function hideGuide() {
+            modal.classList.add('opacity-0', 'pointer-events-none');
+            modal.classList.remove('opacity-100');
+            modalContent.classList.remove('scale-100');
+            modalContent.classList.add('scale-95');
+            document.body.style.overflow = '';
+        }
+
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) hideGuide();
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,213 @@
+html {
+  box-sizing: border-box;
+}
+*, *::before, *::after {
+  box-sizing: inherit;
+}
+
+body {
+  font-family: 'Segoe UI', sans-serif;
+  margin: 0;
+  padding: 0;
+  background: #f4f6fb;
+  color: #333;
+}
+
+.container {
+  max-width: 1100px;
+  margin: auto;
+  padding: 2rem 1rem;
+}
+
+/* Header */
+.header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+.header h1 {
+  font-size: 2.5rem;
+  color: #003366;
+  margin-bottom: 0.5rem;
+}
+.header p {
+  font-size: 1rem;
+  color: #555;
+}
+.dark-toggle {
+  margin-top: 1rem;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  background: #007bff;
+  color: #fff;
+  transition: background 0.2s;
+}
+.dark-toggle:hover {
+  background: #0056b3;
+}
+
+/* 搜索区域 */
+.search-section {
+  background: white;
+  border-radius: 16px;
+  padding: 1.5rem;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+  margin-bottom: 2rem;
+}
+.search-input {
+  width: 100%;
+  padding: 0.9rem 1.2rem;
+  font-size: 1rem;
+  margin-bottom: 1rem;
+  border-radius: 12px;
+  border: 1px solid #ccc;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+}
+.category-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+.filter-btn {
+  background: #eee;
+  border: none;
+  padding: 0.6rem 1.2rem;
+  border-radius: 20px;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.filter-btn:hover {
+  background: #d0e6ff;
+}
+.filter-btn.active {
+  background: #007bff;
+  color: white;
+}
+
+/* 分类标题 */
+.category {
+  margin: 2rem 0;
+}
+.category h2 {
+  font-size: 1.5rem;
+  border-left: 5px solid #007bff;
+  padding-left: 0.75rem;
+  margin-bottom: 1rem;
+  color: #007bff;
+}
+
+/* 软件卡片 */
+.software-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1.5rem;
+}
+.card {
+  background: white;
+  padding: 1.5rem;
+  border-radius: 16px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
+}
+.card h3 {
+  margin: 0 0 0.5rem 0;
+  color: #222;
+  font-size: 1.2rem;
+}
+.card p {
+  margin: 0.25rem 0;
+  font-size: 0.95rem;
+}
+.download {
+  margin-top: 0.75rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: #007bff;
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  text-decoration: none;
+  font-size: 0.95rem;
+}
+.download:hover {
+  background: #0056b3;
+}
+.update-time {
+  font-size: 0.85rem;
+  color: #888;
+  margin-top: 0.25rem;
+}
+
+/* 高亮 */
+mark {
+  background: yellow;
+  color: inherit;
+  padding: 0 2px;
+  border-radius: 3px;
+}
+
+/* Dark mode */
+.container.dark {
+  background-color: #222;
+  color: #eee;
+}
+.container.dark .header h1 {
+  color: #66b3ff;
+}
+.container.dark .header p {
+  color: #bbb;
+}
+.container.dark .search-section {
+  background: #333;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+.container.dark .search-input {
+  background: #444;
+  border-color: #666;
+  color: #eee;
+}
+.container.dark .search-input::placeholder {
+  color: #bbb;
+}
+.container.dark .filter-btn {
+  background: #555;
+  color: #eee;
+}
+.container.dark .filter-btn:hover {
+  background: #666;
+}
+.container.dark .filter-btn.active {
+  background: #0056b3;
+  color: white;
+}
+.container.dark .category h2 {
+  color: #66b3ff;
+  border-left-color: #66b3ff;
+}
+.container.dark .card {
+  background: #333;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+.container.dark .card h3 {
+  color: #eee;
+}
+.container.dark .card p {
+  color: #ccc;
+}
+.container.dark .download {
+  background: #0056b3;
+}
+.container.dark .download:hover {
+  background: #003d80;
+}
+.container.dark .update-time {
+  color: #aaa;
+}
+

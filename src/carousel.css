@@ -1,0 +1,44 @@
+.banner-carousel {
+    width: 100%;
+    max-width: 1100px;
+    margin: 2rem auto;
+    overflow: hidden;
+    position: relative;
+    /* Increased border-radius for a softer look */
+    border-radius: 16px;
+    /* Updated box-shadow to be darker and more pronounced for depth */
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.5);
+}
+
+.carousel-images {
+    display: flex;
+    transition: transform 0.5s ease-in-out;
+}
+
+.carousel-image {
+    width: 100%;
+    flex-shrink: 0;
+    display: block;
+}
+
+.carousel-dots {
+    position: absolute;
+    bottom: 1.5rem; /* Increased distance from the bottom */
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 0.75rem; /* Increased space between dots */
+}
+
+.dot {
+    width: 12px; /* Slightly larger dot size */
+    height: 12px;
+    background-color: rgba(255, 255, 255, 0.3); /* Slightly more transparent */
+    border-radius: 50%;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.dot.active {
+    background-color: #fff;
+}

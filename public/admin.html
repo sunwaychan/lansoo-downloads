@@ -1,0 +1,256 @@
+﻿<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lansoo 后台管理</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 min-h-screen">
+  <div id="app"></div>
+  <script>
+    const API = "";
+    let token = localStorage.getItem("admin_token") || "";
+    let categories = [];
+    let software = [];
+    let editingId = null;
+
+    // ---- 工具函数 ----
+    function $(sel) { return document.querySelector(sel); }
+    function h(tag, attrs, ...children) {
+      const el = document.createElement(tag);
+      if (attrs) Object.entries(attrs).forEach(([k, v]) => {
+        if (k.startsWith("on")) el.addEventListener(k.slice(2).toLowerCase(), v);
+        else if (k === "className") el.className = v;
+        else if (k === "innerHTML") el.innerHTML = v;
+        else el.setAttribute(k, v);
+      });
+      children.flat().forEach(c => {
+        if (c == null) return;
+        el.appendChild(typeof c === "string" ? document.createTextNode(c) : c);
+      });
+      return el;
+    }
+
+    async function api(path, opts = {}) {
+      const headers = { "Content-Type": "application/json" };
+      if (token) headers["Authorization"] = `Bearer ${token}`;
+      const res = await fetch(API + path, { ...opts, headers });
+      if (res.status === 401) { token = ""; localStorage.removeItem("admin_token"); render(); throw new Error("认证过期"); }
+      return res.json();
+    }
+
+    // ---- 登录页 ----
+    function renderLogin() {
+      const app = $("#app");
+      app.innerHTML = "";
+      app.appendChild(
+        h("div", { className: "min-h-screen flex items-center justify-center" },
+          h("form", {
+            className: "bg-white p-8 rounded-xl shadow-lg w-full max-w-sm",
+            onSubmit: async (e) => {
+              e.preventDefault();
+              const pw = $("#admin-pw").value;
+              try {
+                const data = await api("/api/admin/login", {
+                  method: "POST",
+                  body: JSON.stringify({ password: pw }),
+                });
+                if (data.token) {
+                  token = data.token;
+                  localStorage.setItem("admin_token", token);
+                  render();
+                } else {
+                  $("#login-error").textContent = data.error || "登录失败";
+                }
+              } catch (err) {
+                $("#login-error").textContent = err.message;
+              }
+            }
+          },
+            h("h2", { className: "text-2xl font-bold mb-4 text-center text-blue-700" }, "Lansoo 后台管理"),
+            h("input", { id: "admin-pw", type: "password", placeholder: "请输入管理员密码",
+              className: "w-full p-3 border rounded-lg mb-3 outline-none focus:ring-2 focus:ring-blue-400" }),
+            h("button", { type: "submit",
+              className: "w-full py-2 bg-blue-600 text-white rounded-lg font-bold hover:bg-blue-700" }, "登录"),
+            h("p", { id: "login-error", className: "text-red-500 text-sm mt-2 text-center" })
+          )
+        )
+      );
+    }
+
+    // ---- 主页 ----
+    async function renderMain() {
+      const app = $("#app");
+      app.innerHTML = "";
+      try {
+        const [cats, sws] = await Promise.all([
+          api("/api/admin/categories"),
+          api("/api/admin/software"),
+        ]);
+        categories = cats;
+        software = sws;
+      } catch { return renderLogin(); }
+
+      const container = h("div", { className: "max-w-6xl mx-auto p-6" });
+
+      // 顶栏
+      container.appendChild(
+        h("div", { className: "flex justify-between items-center mb-6" },
+          h("h1", { className: "text-3xl font-bold text-blue-700" }, "Lansoo 后台管理"),
+          h("div", { className: "flex gap-3" },
+            h("button", { className: "px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700",
+              onClick: () => showForm(null) }, "+ 新增软件"),
+            h("button", { className: "px-4 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700",
+              onClick: () => { token = ""; localStorage.removeItem("admin_token"); render(); } }, "退出登录")
+          )
+        )
+      );
+
+      // 分类管理
+      const catSection = h("div", { className: "bg-white rounded-xl shadow p-5 mb-6" });
+      catSection.appendChild(h("h3", { className: "text-lg font-bold mb-3" }, "分类管理"));
+      const catList = h("div", { className: "flex flex-wrap gap-2 mb-3" });
+      categories.forEach(c => {
+        catList.appendChild(
+          h("span", { className: "px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm flex items-center gap-2" },
+            `${c.name} (${c.sort_order})`,
+            h("button", { className: "text-red-500 hover:text-red-700 font-bold",
+              onClick: async () => {
+                if (!confirm(`删除分类「${c.name}」？该分类下的软件也会被删除！`)) return;
+                await api(`/api/admin/categories/${c.id}`, { method: "DELETE" });
+                renderMain();
+              } }, "×")
+          )
+        );
+      });
+      catSection.appendChild(catList);
+
+      // 新增分类
+      const catForm = h("div", { className: "flex gap-2" },
+        h("input", { id: "new-cat-name", placeholder: "新分类名称",
+          className: "flex-1 p-2 border rounded-lg text-sm" }),
+        h("input", { id: "new-cat-order", type: "number", placeholder: "排序", value: "0",
+          className: "w-20 p-2 border rounded-lg text-sm" }),
+        h("button", { className: "px-3 py-2 bg-blue-600 text-white rounded-lg text-sm hover:bg-blue-700",
+          onClick: async () => {
+            const name = $("#new-cat-name").value.trim();
+            if (!name) return;
+            await api("/api/admin/categories", {
+              method: "POST",
+              body: JSON.stringify({ name, sort_order: parseInt($("#new-cat-order").value) || 0 }),
+            });
+            renderMain();
+          } }, "添加分类")
+      );
+      catSection.appendChild(catForm);
+      container.appendChild(catSection);
+
+      // 软件列表
+      const table = h("table", { className: "w-full bg-white rounded-xl shadow overflow-hidden" });
+      table.innerHTML = `
+        <thead class="bg-gray-50">
+          <tr>
+            <th class="p-3 text-left text-sm">名称</th>
+            <th class="p-3 text-left text-sm">分类</th>
+            <th class="p-3 text-left text-sm">描述</th>
+            <th class="p-3 text-left text-sm">更新日期</th>
+            <th class="p-3 text-center text-sm">操作</th>
+          </tr>
+        </thead>
+      `;
+      const tbody = h("tbody");
+      software.forEach(s => {
+        const tr = h("tr", { className: "border-t hover:bg-gray-50" });
+        tr.innerHTML = `
+          <td class="p-3 text-sm font-medium">${esc(s.name)}</td>
+          <td class="p-3 text-sm"><span class="px-2 py-0.5 bg-blue-100 text-blue-700 rounded text-xs">${esc(s.category_name)}</span></td>
+          <td class="p-3 text-sm text-gray-600 max-w-xs truncate">${esc(s.description)}</td>
+          <td class="p-3 text-sm text-gray-500">${esc(s.updated_at)}</td>
+        `;
+        const actions = h("td", { className: "p-3 text-center flex justify-center gap-2" });
+        actions.appendChild(h("button", {
+          className: "px-3 py-1 bg-yellow-500 text-white rounded text-sm hover:bg-yellow-600",
+          onClick: () => showForm(s),
+        }, "编辑"));
+        actions.appendChild(h("button", {
+          className: "px-3 py-1 bg-red-500 text-white rounded text-sm hover:bg-red-600",
+          onClick: async () => {
+            if (!confirm(`确认删除「${s.name}」？`)) return;
+            await api(`/api/admin/software/${s.id}`, { method: "DELETE" });
+            renderMain();
+          },
+        }, "删除"));
+        tr.appendChild(actions);
+        tbody.appendChild(tr);
+      });
+      table.appendChild(tbody);
+      container.appendChild(table);
+
+      // 表单区域
+      container.appendChild(h("div", { id: "form-area" }));
+      app.appendChild(container);
+    }
+
+    function esc(s) { const d = document.createElement("div"); d.textContent = s || ""; return d.innerHTML; }
+
+    // ---- 新增/编辑表单 ----
+    function showForm(item) {
+      const area = $("#form-area");
+      if (!area) return;
+      area.innerHTML = "";
+      const isEdit = !!item;
+      const form = h("div", { className: "fixed inset-0 bg-black/40 flex items-center justify-center z-50" });
+      const panel = h("div", { className: "bg-white rounded-xl shadow-2xl p-6 w-full max-w-lg" });
+      panel.innerHTML = `
+        <h3 class="text-xl font-bold mb-4">${isEdit ? "编辑软件" : "新增软件"}</h3>
+        <div class="space-y-3">
+          <select id="f-cat" class="w-full p-2 border rounded-lg">
+            ${categories.map(c => `<option value="${c.id}" ${item && item.category_id == c.id ? "selected" : ""}>${esc(c.name)}</option>`).join("")}
+          </select>
+          <input id="f-name" placeholder="软件名称" value="${isEdit ? esc(item.name) : ""}" class="w-full p-2 border rounded-lg" />
+          <input id="f-desc" placeholder="描述" value="${isEdit ? esc(item.description) : ""}" class="w-full p-2 border rounded-lg" />
+          <input id="f-url" placeholder="下载链接" value="${isEdit ? esc(item.download_url) : ""}" class="w-full p-2 border rounded-lg" />
+          <input id="f-date" type="date" value="${isEdit ? item.updated_at : new Date().toISOString().slice(0,10)}" class="w-full p-2 border rounded-lg" />
+          <input id="f-order" type="number" placeholder="排序" value="${isEdit ? item.sort_order : 0}" class="w-full p-2 border rounded-lg" />
+        </div>
+        <div class="flex justify-end gap-3 mt-4">
+          <button id="f-cancel" class="px-4 py-2 bg-gray-300 rounded-lg hover:bg-gray-400">取消</button>
+          <button id="f-save" class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">${isEdit ? "保存" : "添加"}</button>
+        </div>
+      `;
+      form.appendChild(panel);
+      area.appendChild(form);
+
+      $("#f-cancel").onclick = () => area.innerHTML = "";
+      form.addEventListener("click", (e) => { if (e.target === form) area.innerHTML = ""; });
+
+      $("#f-save").onclick = async () => {
+        const data = {
+          category_id: parseInt($("#f-cat").value),
+          name: $("#f-name").value.trim(),
+          description: $("#f-desc").value.trim(),
+          download_url: $("#f-url").value.trim(),
+          updated_at: $("#f-date").value,
+          sort_order: parseInt($("#f-order").value) || 0,
+        };
+        if (!data.name || !data.download_url) { alert("名称和下载链接不能为空"); return; }
+        if (isEdit) {
+          await api(`/api/admin/software/${item.id}`, { method: "PUT", body: JSON.stringify(data) });
+        } else {
+          await api("/api/admin/software", { method: "POST", body: JSON.stringify(data) });
+        }
+        area.innerHTML = "";
+        renderMain();
+      };
+    }
+
+    // ---- 路由 ----
+    function render() {
+      if (!token) renderLogin();
+      else renderMain();
+    }
+    render();
+  </script>
+</body>
+</html>

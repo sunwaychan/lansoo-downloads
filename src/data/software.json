@@ -1,0 +1,456 @@
+{
+    "远程软件": [
+    {
+      "name": "连连控Asklink",
+      "description": "需在线远程支持，下载安装并联系微信号:qq2269404909",
+      "updatedAt": "2025-07-10",
+      "downloadUrl": "https://www.asklink.com/"
+    },
+    {
+      "name": "网易UU远程",
+      "description": "需在线远程支持，下载安装并联系微信号:qq2269404909",
+      "updatedAt": "2025-07-01",
+      "downloadUrl": "https://uuyc.163.com/"
+    },
+    {
+      "name": "Todesk",
+      "description": "需在线远程支持，下载安装并联系微信号:qq2269404909",
+      "updatedAt": "2025-07-10",
+      "downloadUrl": "https://todesk.com/"
+    },
+    {
+      "name": "贝锐向日葵",
+      "description": "需在线远程支持，下载安装并联系微信号:qq2269404909",
+      "updatedAt": "2025-07-10",
+      "downloadUrl": "https://sunlogin.oray.com/"
+    },
+    {
+      "name": "RUSTDESK",
+      "description": "优秀的开源远控",
+      "updatedAt": "2025-07-01",
+      "downloadUrl": "https://rustdesk.com/"
+    }
+  ],
+  "系统安装": [
+    {
+      "name": "Win10 微软镜像",
+      "description": "微软官方原版 ISO 镜像。",
+      "updatedAt": "2025-07-10",
+      "downloadUrl": "https://www.microsoft.com/zh-cn/software-download/windows10"
+    },
+    {
+      "name": "Win11 微软镜像",
+      "description": "微软官方原版 ISO 镜像。",
+      "updatedAt": "2025-07-10",
+      "downloadUrl": "https://www.microsoft.com/zh-cn/software-download/windows11"
+    },
+    {
+      "name": "MSDN",
+      "description": "微软 ISO 镜像。",
+      "updatedAt": "2025-07-10",
+      "downloadUrl": "https://msdn.itellyou.cn/"
+    },
+    {
+      "name": "Ventoy 启动盘工具",
+      "description": "多系统启动 U 盘制作工具。",
+      "updatedAt": "2025-07-01",
+      "downloadUrl": "https://www.ventoy.net/cn/index.html"
+    },
+    {
+      "name": "Firpe",
+      "description": "WINPE工具",
+      "updatedAt": "2025-07-01",
+      "downloadUrl": "https://firpe.cn/page-247"
+    },
+    {
+      "name": "Hotpe",
+      "description": "纯净强大优雅PE工具",
+      "updatedAt": "2025-07-01",
+      "downloadUrl": "https://www.hotpe.top/"
+    },
+    {
+      "name": "WEPE",
+      "description": "超好用PE工具4.7",
+      "updatedAt": "2025-07-01",
+      "downloadUrl": "https://www.123865.com/s/jDqyTd-LEIpH"
+    },
+    {
+      "name": "Rufus",
+      "description": "4.10轻量级系统启动盘制作工具",
+      "updatedAt": "2025-09-25",
+      "downloadUrl": "https://www.123865.com/s/jDqyTd-iMIpH"
+    }
+  ],
+  "日常软件": [
+     {
+      "name": "瓦特Watt Toolkit工具箱",
+      "description": "Steam++ 现更名为 Watt Toolkit 并在 Microsoft Store 中已可用",
+      "updatedAt": "2025-09-02",
+      "downloadUrl": "https://steampp.net/"
+    },
+    {
+      "name": "Steam游戏平台",
+      "description": "Steam",
+      "updatedAt": "2025-12-02",
+      "downloadUrl": "https://store.steampowered.com/"
+    },
+    {
+      "name": "OFFICE TOOL PLUS",
+      "description": "OFFICE",
+      "updatedAt": "2025-07-10",
+      "downloadUrl": "https://otp.landian.vip/zh-cn/"
+    },
+    {
+      "name": "7-Zip 解压软件",
+      "description": "免费开源的压缩软件。",
+      "updatedAt": "2025-01-20",
+      "downloadUrl": "https://www.7-zip.org/"
+    },
+    {
+      "name": "Winrar解压软件",
+      "description": "全球老牌经典解压缩软件",
+      "updatedAt": "2025-01-20",
+      "downloadUrl": "https://www.jb51.net/softs/593707.html"
+    },
+    {
+      "name": "XnView MP",
+      "description": "支持多格式看图",
+      "updatedAt": "2025-06-10",
+      "downloadUrl": "https://www.xnview.com/en/xnview-mp/"
+    },
+    {
+      "name": "Pdfgear",
+      "description": "多功能PDF软件",
+      "updatedAt": "2026-01-10",
+      "downloadUrl": "https://www.123865.com/s/jDqyTd-wkMpH"
+    },
+    {
+      "name": "voidImageViewer",
+      "description": "轻巧看图软件",
+      "updatedAt": "2026-01-10",
+      "downloadUrl": "https://www.voidtools.com/forum/viewtopic.php?t=5623"
+    },
+    {
+      "name": "Potplayer",
+      "description": "万能视频播放器",
+      "updatedAt": "2025-05-10",
+      "downloadUrl": "https://potplayer.tv/?lang=zh_CN"
+    },
+    {
+      "name": "K-Lite Codec Pack",
+      "description": "万能解码https://www.codecguide.com/download_kl.htm",
+      "updatedAt": "2025-11-10",
+      "downloadUrl": "https://www.123865.com/s/jDqyTd-leIpH?pwd=8888#"
+    },
+    {
+      "name": "Seelen UI",
+      "description": " 可让你定制适合自己风格和需求的桌面。你可以调整菜单、小工具和其他元素，创建最适合你的工作空间。",
+      "updatedAt": "2025-11-21",
+      "downloadUrl": "https://seelen.io/zh-CN/apps/seelen-ui"
+    },
+    {
+      "name": "Microsoft Edge 浏览器",
+      "description": "微软官方浏览器",
+      "updatedAt": "2025-06-10",
+      "downloadUrl": "https://www.microsoft.com/zh-cn/edge/download?form=MA13FJ"
+    },
+    {
+      "name": "Geek Uninstaller",
+      "description": "GEEK",
+      "updatedAt": "2025-09-10",
+      "downloadUrl": "https://geekuninstaller.com/download"
+    },
+    {
+      "name": "电脑管家NEW",
+      "description": "系统防护",
+      "updatedAt": "2025-06-10",
+      "downloadUrl": "https://guanjia.qq.com/"
+    },
+    {
+      "name": "电脑管家OLD",
+      "description": "系统防护2017",
+      "updatedAt": "2024-08-10",
+      "downloadUrl": "https://www.123865.com/s/jDqyTd-YpIpH"
+    }
+  ],
+  "系统优化": [
+    {
+      "name": "Windows11轻松设置",
+      "description": "系统清理优化工具V1.12。https://osssr.lanzoum.com/iEBL93d3cx4j",
+      "updatedAt": "2025-10-15",
+      "downloadUrl": "https://www.123865.com/s/jDqyTd-BHMpH?pwd=8888#"
+    },
+   {
+      "name": "ZyperWin++",
+      "description": " 4.1ZyperWin++是一个轻便的Windows优化工具，适用于Win7-Win11最新版的优化，包括性能优化、服务项优化、垃圾清理等操作，还支持系统激活和Office快速安装。",
+      "updatedAt": "2025-12-15",
+      "downloadUrl": "https://www.123865.com/s/jDqyTd-oVIpH"
+    },
+    {
+      "name": "关闭系统更新Wub",
+      "description": "关闭更新1.6",
+      "updatedAt": "2025-10-1",
+      "downloadUrl": "https://www.123865.com/s/jDqyTd-EVIpH"
+    },
+    {
+      "name": "HiBit Uninstaller",
+      "description": "功能强大的电脑软件卸载工具“https://mefcl.lanzn.com/b0ize5uqj”",
+      "updatedAt": "2025-12-10",
+      "downloadUrl": "https://www.123865.com/s/jDqyTd-QVIpH"
+    },
+    {
+      "name": "运行库",
+      "description": "Visual C++ 微软常用运行库合集 32/64位",
+      "updatedAt": "2026-01-30",
+      "downloadUrl": "https://www.jb51.net/softs/607905.html"
+    },
+    {
+      "name": "Clash",
+      "description": "Clash",
+      "updatedAt": "2025-12-30",
+      "downloadUrl": "https://clashforwindows.org.cn/index.html"
+    },
+    {
+    "name": "个人文件转移工具V2.0",
+      "description": "个人文件转移工具可以把“我的文档”、“桌面”等个人文件夹从C盘转移到D盘，一次使用，永久有效",
+      "updatedAt": "2025-06-19",
+      "downloadUrl": "https://www.123pan.com/s/jQg8Vv-klcAh.html"
+    },
+    {
+    "name": "流软屏蔽Malware-Patch",
+      "description": "一键阻止常见流氓软件的管理权限2410",
+      "updatedAt": "2025-11-19",
+      "downloadUrl": "https://www.123865.com/s/jDqyTd-SeIpH"
+    },
+    {
+      "name": "Softcnkiller",
+      "description": "流氓软件专杀弹窗定位V264",
+      "updatedAt": "2025-10-10",
+      "downloadUrl": "https://www.123865.com/s/jDqyTd-SCIpH?pwd=8888#"
+    },
+    {
+      "name": "DirectX_Repair_增强版",
+      "description": "DirectX组件修复工具v4.4.0.36953.7z",
+      "updatedAt": "2025-12-15",
+      "downloadUrl": "https://www.123684.com/s/1QeA-tUA8v"
+    },
+    {
+      "name": "网卡56修复",
+      "description": "修复56报错：HKEY_LOCAL_MACHINE SOFTWARE Classes CLSID {3d09c1ca-2bcc-40b7-b9bb-3f3ec143a87b}",
+      "updatedAt": "2025-12-15",
+      "downloadUrl": "https://www.123865.com/s/jDqyTd-WVIpH"
+    },
+    {
+      "name": "AutoRemove2.2.0",
+      "description": "修复文件夹QX，autocad，3d",
+      "updatedAt": "2025-11-25",
+      "downloadUrl": "https://wwzr.lanzout.com/iFz8j34eejrc"
+    },
+     {
+      "name": "WizTreev",
+      "description": "4.28磁盘空间分析器bknk",
+      "updatedAt": "2026-01-10",
+      "downloadUrl": "https://mefcl.lanzouw.com/b012bochi "
+    },
+   {
+      "name": "虚拟化环境检测修复",
+      "description": "ACE虚拟化环境检测修复工具V5.0",
+      "updatedAt": "2025-09-01",
+      "downloadUrl": "https://www.123865.com/s/jDqyTd-CEIpH"
+    }
+  ],
+  "测试工具": [
+    {
+      "name": "图吧",
+      "description": "电脑硬件性能检测工具合集",
+      "updatedAt": "2025-04-30",
+      "downloadUrl": "https://tbtool.luomashu.com/"
+    },
+    {
+      "name": "DiskGenius",
+      "description": "硬盘管理",
+      "updatedAt": "2025-04-30",
+      "downloadUrl": "https://www.diskgenius.cn/"
+    },
+    {
+      "name": "傲梅分区",
+      "description": "硬盘管理",
+      "updatedAt": "2025-03-30",
+      "downloadUrl": "https://www.disktool.cn/"
+    },
+    {
+      "name": "CrystalDiskInfo 9.7.0 绿色版",
+      "description": "硬盘驱动器（HDD）和固态硬盘（SSD）健康监控工具",
+      "updatedAt": "2025-03-30",
+      "downloadUrl": "https://www.osssr.com/452.html"
+    },
+    {
+      "name": "HD Tune Pro 6.0 硬盘信息检测",
+      "description": "硬盘检测工具软件，主要功能有硬盘传输速率检测，健康状态检测，温度检测及磁盘表面扫描等",
+      "updatedAt": "2025-03-30",
+      "downloadUrl": "https://www.osssr.com/4523.html"
+    },
+    {
+      "name": "Memtest86 11.2.2000 专业版",
+      "description": "专业的内存测试工具，旨在帮助用户检测计算机内存（RAM）中的潜在问题",
+      "updatedAt": "2025-03-30",
+      "downloadUrl": "https://www.osssr.com/17490.html"
+    },
+    {
+    "name": "键盘在线测试",
+      "description": "在线诊断键盘测试",
+      "updatedAt": "2025-07-07",
+      "downloadUrl": "https://key-test.com/cn/"
+    },
+   {
+    "name": "鼠标测试",
+      "description": "在线诊断鼠标测试",
+      "updatedAt": "2025-12-07",
+      "downloadUrl": "https://www.mousetester.cn/"
+    },
+   {
+    "name": "屏幕测试",
+      "description": "在线屏幕测试",
+      "updatedAt": "2025-12-07",
+      "downloadUrl": "https://screen.bmcx.com/#welcome"
+    },
+    {
+      "name": "CPU-Z",
+      "description": "查看 CPU 和主板信息。",
+      "updatedAt": "2025-04-30",
+      "downloadUrl": "https://www.cpuid.com/softwares/cpu-z.html"
+    }
+  ],
+  "故障维护": [
+    {
+      "name": "R-Studio 9.5.191520 便携版 - 数据恢复",
+      "description": "数据恢复软件，专为从硬盘、闪存盘、内存卡以及其他存储设备中恢复丢失、损坏或被删除的文件而设计",
+      "updatedAt": "2025-06-30",
+      "downloadUrl": "https://www.osssr.com/3445.html"
+    },
+    {
+      "name": "EasyRecovery 16.0.0.8 安装版",
+      "description": "EasyRecovery 易恢复是由全球著名数据厂商Kroll Ontrack ® 出品的一款数据文件恢复软件，号称全球最好的数据恢复软件",
+      "updatedAt": "2025-04-30",
+      "downloadUrl": "https://www.osssr.com/761.html"
+    },
+    {
+    "name": "bluescreenview155蓝屏诊断工具",
+      "description": "155蓝屏诊断工具",
+      "updatedAt": "2025-12-07",
+      "downloadUrl": "https://www.123865.com/s/jDqyTd-kVIpH"
+    },
+    {
+      "name": "DISMTools 0.7 绿色版",
+      "description": "DISMTools 是一款专为 Windows 系统设计的工具，旨在简化和增强 DISM（Deployment Image Servicing and Management）命令的使用",
+      "updatedAt": "2025-04-30",
+      "downloadUrl": "https://www.osssr.com/17300.html"
+    },
+    {
+      "name": "Dism++ 10.1.1002.2 系统优化工具绿色版",
+      "description": "Dism++ 也许是最强的系统优化实用工具，号称全球第一款基于 CBS 的 Dism GUI 实现",
+      "updatedAt": "2025-04-30",
+      "downloadUrl": "https://www.osssr.com/435.html"
+    }
+  ],
+   "在线工具": [
+    {
+      "name": "ipV6测试",
+      "description": "IPv6 连接测试",
+      "updatedAt": "2025-09-05",
+      "downloadUrl": "https://ipv6ready.me/"
+    },
+    {
+      "name": "压缩解密",
+      "description": "找回你的档案忘记密码",
+      "updatedAt": "2025-09-03",
+      "downloadUrl": "https://scamalytics.com/"
+    },
+    {
+      "name": "测速A",
+      "description": "测试互联网速度",
+      "updatedAt": "2025-04-30",
+      "downloadUrl": "https://speedtestgo.com/zh/#speedtest"
+    },
+    {
+      "name": "测速B",
+      "description": "通用测速",
+      "updatedAt": "2025-04-30",
+      "downloadUrl": "https://m.speedtest.cn/"
+    },
+    {
+      "name": "测速C",
+      "description": "wai测速",
+      "updatedAt": "2025-04-30",
+      "downloadUrl": "https://fast.com/"
+     }, 
+   {
+      "name": "AI工具合集",
+      "description": "国内外AI合集",
+      "updatedAt": "2025-04-30",
+      "downloadUrl": "https://ai-bot.cn/"
+     }, 
+   {
+      "name": "iknowwhatyoudownload",
+      "description": "你的邻居在干什么",
+      "updatedAt": "2025-04-30",
+      "downloadUrl": "https://iknowwhatyoudownload.com/"
+     }, 
+    {
+      "name": "iknowwhatyoudownload",
+      "description": "你的邻居在干什么",
+      "updatedAt": "2025-04-30",
+      "downloadUrl": "https://iknowwhatyoudownload.com/"
+     }, 
+   {
+      "name": "ip查询",
+      "description": "查看自己的IP地址",
+      "updatedAt": "2025-04-30",
+      "downloadUrl": "https://www.sojson.com/myip/"
+    }
+  ],
+  "代码命令": [
+    {
+      "name": "Powershell",
+      "description": "irm https://get.activated.win | iex  *** irm https://massgrave.dev/get | iex",
+      "updatedAt": "2025-04-30",
+      "downloadUrl": "https://soft.4664456.xyz"
+    },
+    {
+      "name": "CMD",
+      "description": "netsh int ip reset | ipconfig /flushdns | cleanmgr /d C ",
+      "updatedAt": "2025-04-30",
+      "downloadUrl": "https://soft.4664456.xyz"
+    },
+   {
+      "name": "允许脚本执行",
+      "description": "Set-ExecutionPolicy Unrestricted",
+      "updatedAt": "2025-04-30",
+      "downloadUrl": "https://soft.4664456.xyz"
+    },
+    {
+      "name": "内存压缩",
+      "description": "Get-MMAgent | Enable-MMAgent -MemoryCompression | Disable-MMAgent –MemoryCompression",
+      "updatedAt": "2025-09-30",
+      "downloadUrl": "https://soft.4664456.xyz"
+    },
+    {
+      "name": "DISM",
+      "description": "DISM /Online /Cleanup-Image /CheckHealth ; DISM /Online /Cleanup-Image /ScanHealth ; DISM /Online /Cleanup-Image /RestoreHealth ",
+      "updatedAt": "2025-04-30",
+      "downloadUrl": "https://soft.4664456.xyz"
+    },
+    {
+      "name": "win11 Nvme",
+      "description": "reg add HKEY_LOCAL_MACHINE-SYSTEM-CurrentControlSet-Policies-Microsoft-FeatureManagement-Overrides  156965516  1853569164 735209102 1 ",
+      "updatedAt": "2026-01-10",
+      "downloadUrl": "https://soft.4664456.xyz"
+    },
+    {
+      "name": "卓越性能-power",
+      "description": "powercfg -duplicatescheme e9a42b02-d5df-448d-aa00-03f14749eb61",
+      "updatedAt": "2025-04-30",
+      "downloadUrl": "https://soft.4664456.xyz"
+    }
+  ]
+}
