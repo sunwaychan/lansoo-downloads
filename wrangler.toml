@@ -1,11 +1,14 @@
 ﻿name = "lansoo-downloads"
 pages_build_output_dir = "dist"
 
-# D1 数据库绑定（部署后由 Cloudflare 自动创建，或手动绑定）
+# D1 数据库绑定
+# 部署前需要替换 database_id：
+#   1. 运行: wrangler d1 create lansoo-software
+#   2. 把输出的 id 填到下面
 [[d1_databases]]
 binding = "DB"
 database_name = "lansoo-software"
-database_id = "<YOUR_D1_DATABASE_ID>"
+database_id = "fd7e2842-8cf3-4bee-907c-169ab75d5394"
 
-# 环境变量：管理员密码（在 Cloudflare Dashboard > Pages > Settings > Environment variables 中设置）
-# ADMIN_PASSWORD = "your-secret-password"
+# 注意：ADMIN_PASSWORD 不要写在这里！
+# 在 Cloudflare Dashboard → Pages → Settings → Environment variables 中设置
