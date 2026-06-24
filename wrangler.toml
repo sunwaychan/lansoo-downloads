@@ -1,0 +1,11 @@
+﻿name = "lansoo-downloads"
+pages_build_output_dir = "dist"
+
+# D1 数据库绑定（部署后由 Cloudflare 自动创建，或手动绑定）
+[[d1_databases]]
+binding = "DB"
+database_name = "lansoo-software"
+database_id = "<YOUR_D1_DATABASE_ID>"
+
+# 环境变量：管理员密码（在 Cloudflare Dashboard > Pages > Settings > Environment variables 中设置）
+# ADMIN_PASSWORD = "your-secret-password"
